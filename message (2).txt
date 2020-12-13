@@ -1,0 +1,158 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct lista
+{
+    // data lista
+    char NomeAzienda[30];
+    char Dipendenti;
+    char Dipartimenti;
+    char Sedi;
+    // puntatore al prox nodo
+    struct lista *next;
+
+}lista;
+
+
+lista *alloc ( )
+{
+    return (lista*)malloc( sizeof( lista ));
+}
+
+int letturaFile(char **fileChar)
+{
+    FILE * f;
+    int i = 0;
+
+    f = fopen("esempioFile.txt", "r");
+    if( fopen == NULL)
+    {
+        printf( "\nil file non è stato aperto correttamnete :\n");
+        return 0;
+    }
+
+    while( !feof ( f ))
+    {
+        fscanf( f, "%s", fileChar[i]);
+
+        i++;
+    }
+
+    fclose( f );
+    return i;
+}
+
+lista * crea_nodo( int j , char *filechar[]) 
+{
+
+    lista * nodo = alloc ();
+
+    nodo->next = NULL;
+    
+    int choice = j%4;
+
+    switch (choice)
+    {
+        case 0: 
+            strcpy(nodo->NomeAzienda[30],filechar[j]);
+            break;
+        case 1:
+            strcpy(nodo->Dipendenti, filechar[j]); 
+            break;
+        case 2: 
+            strcpy(nodo->Dipartimenti , filechar[j]);
+            break;
+        case 3:
+            strcpy(nodo->Sedi , filechar[j]);
+            break;
+        default: 
+            printf("lo switch case, non funziona ciao.");
+            break;
+    }
+
+
+    return nodo;
+}
+
+void prints(lista *testa)
+{
+    printf("\n");
+    lista *nodo = testa;
+
+    int choice, count=0, j = 0;
+
+    printf("\nLa lista e' : ");
+
+    if( nodo == NULL) printf("vuota; ");
+    else
+    {   
+        
+        while(nodo != NULL)
+        {
+            choice = j%4;
+
+            switch (choice)
+            {
+                case 0: 
+                    printf("%s  ",nodo->NomeAzienda[30]); 
+                    break;
+                case 1:
+                    printf("%s  ",nodo->Dipendenti);  
+                    break;
+                case 2: 
+                    printf("%s  ",nodo->Dipartimenti); 
+                    break;
+                case 3:
+                    printf("%s  ",nodo->Sedi); 
+                    break;
+                default: 
+                    printf("lo switch case, non funziona ciao.");
+                    break;
+            } 
+
+            j++;
+            nodo = nodo->next;
+
+            if ( choice == 3) printf("\n");
+            
+            count++;
+            if(count > 100)
+            exit(1);      
+        }
+
+        
+        printf(" NULL\n");
+
+    }
+}
+
+lista * riemp_testa( lista * testa , char *fileChar[])
+{
+
+    testa = alloc( );
+
+    lista *nodo_t = testa;
+
+    strcpy(nodo_t->NomeAzienda[30] , fileChar[0]);
+
+    nodo_t->next = NULL;
+
+    return testa;
+
+}
+
+lista * inserimento ( lista *testa)
+
+
+int main( )
+{
+    lista * testa = NULL; 
+
+    testa = inserimento ( testa );
+
+    prints ( testa );
+
+    return 0;
+}
